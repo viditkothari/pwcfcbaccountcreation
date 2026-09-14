@@ -45,7 +45,7 @@ export const GlobalHeader = ({ theme, onToggleTheme }) => {
         <div className="flex items-center gap-1 ml-auto">
           <a
             data-testid="download-sf-package"
-            href={`${process.env.REACT_APP_BACKEND_URL}/api/scaffold/download`}
+            href={`${process.env.REACT_APP_BACKEND_URL || ""}/api/scaffold/download`}
             title="Download Salesforce metadata package (LWC + Flow + Apex)"
             className="hidden md:inline-flex items-center gap-1.5 h-9 px-3 mr-1 rounded-md bg-white/10 hover:bg-white/20 text-[13px] font-medium transition-colors duration-150"
           >

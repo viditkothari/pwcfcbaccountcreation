@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const BASE = `${process.env.REACT_APP_BACKEND_URL}/api`;
+// Same-origin by default (works on any Vercel domain). Locally, REACT_APP_BACKEND_URL
+// in frontend/.env points at the preview backend.
+const BASE = `${process.env.REACT_APP_BACKEND_URL || ""}/api`;
 
 export const api = {
   metadata: async () => (await axios.get(`${BASE}/metadata`)).data,
