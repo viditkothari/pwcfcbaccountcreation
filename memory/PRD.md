@@ -38,14 +38,15 @@ Agents must: (1) pick a level to create → (2) search/validate against existing
 - Preview slide-over drawer + read-only launch view with success banner for new records.
 - Dynamic L1/L2 create form with required + regex validation, completion meter, parent-relationship picklist for L2.
 - Rich seed data (5×L1, 6×L2, 4×L3, 4×L4). Light/dark theme.
-- Verified: backend 100% (12/12 pytest), frontend 100% e2e (testing agent iteration_1).
+- **Enterprise Hierarchy rollup tree** on the record/launch view — backend `GET /api/accounts/{id}/hierarchy` walks to the ultimate L1 parent and returns the full nested L1→L2→L3→L4 tree (cycle-guarded); frontend renders a flattened, depth-indented tree with the focused record highlighted.
+- **Downloadable Salesforce package** — `GET /api/scaffold/download` streams a 12-file SFDX zip (Screen Flow `.flow-meta.xml`, `relationshipSearch` + `relationshipHierarchyTree` LWCs, `RelationshipSearchController` Apex, `package.xml`, `sfdx-project.json`, README). "SF Package" download button in the global header.
+- Verified: backend 100% (17/17 pytest), frontend 100% e2e (testing agent iterations 1 & 2).
 
 ## Backlog
-- **P1**: Hierarchy tree visualization on launch view (show L1→L4 rollup for the record).
-- **P1**: Persist recently-viewed / "in-progress" drafts for the create form.
 - **P2**: Export results table to CSV; column show/hide chooser.
-- **P2**: Actual Salesforce LWC + flow metadata scaffolding as a downloadable reference.
-- **P2**: Deprecated `@app.on_event` → FastAPI lifespan; tighten CORS.
+- **P2**: Draft saving / resume for the create form.
+- **P2**: Cache hierarchy via react-query; index-based ancestor lookup for large datasets.
+- **P2**: Deprecated `@app.on_event` → FastAPI lifespan; tighten CORS (drop wildcard+credentials).
 
 ## Next Tasks
 - Await user feedback on the prototype; likely next: hierarchy tree view and/or CSV export.

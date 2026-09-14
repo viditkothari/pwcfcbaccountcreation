@@ -1,4 +1,4 @@
-import { Building2, Search, Bell, HelpCircle, Settings, Sun, Moon, Grid3x3 } from "lucide-react";
+import { Building2, Search, Bell, HelpCircle, Settings, Sun, Moon, Grid3x3, Download } from "lucide-react";
 
 export const GlobalHeader = ({ theme, onToggleTheme }) => {
   return (
@@ -43,6 +43,14 @@ export const GlobalHeader = ({ theme, onToggleTheme }) => {
         </div>
 
         <div className="flex items-center gap-1 ml-auto">
+          <a
+            data-testid="download-sf-package"
+            href={`${process.env.REACT_APP_BACKEND_URL}/api/scaffold/download`}
+            title="Download Salesforce metadata package (LWC + Flow + Apex)"
+            className="hidden md:inline-flex items-center gap-1.5 h-9 px-3 mr-1 rounded-md bg-white/10 hover:bg-white/20 text-[13px] font-medium transition-colors duration-150"
+          >
+            <Download className="h-4 w-4" /> SF Package
+          </a>
           <button
             data-testid="theme-toggle"
             onClick={onToggleTheme}

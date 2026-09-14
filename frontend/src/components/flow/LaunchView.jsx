@@ -1,5 +1,8 @@
-import { ArrowLeft, Building2, CheckCircle2, ExternalLink, Star, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowLeft, Building2, CheckCircle2, ExternalLink, Star, Sparkles, Network } from "lucide-react";
 import { LEVELS, DETAIL_SECTIONS, parentOf } from "../../lib/levelConfig";
+import { HierarchyTree } from "./HierarchyTree";
+import { api } from "../../lib/api";
 
 const val = (row, key) => {
   if (["name", "relationshipId", "country", "industry", "status"].includes(key)) return row[key];
@@ -9,6 +12,19 @@ const val = (row, key) => {
 export const LaunchView = ({ record, isNew, onBack, onRestart }) => {
   const lvl = LEVELS[record.level];
   const sections = DETAIL_SECTIONS[record.level] || [];
+  const [tree, setTree] = useState(null);
+  const [treeLoading, setTreeLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    setTreeLoading(true);
+    setTree(null);
+    api.hierarchy(record.id)
+      .then((d) => { if (active) setTree(d.tree); })
+      .catch(() => {})
+      .finally(() => { if (active) setTreeLoading(false); });
+    return () => { active = false; };
+  }, [record.id]);
 
   return (
     <div data-testid="launch-view" className="animate-fade-up">
@@ -73,6 +89,20 @@ export const LaunchView = ({ record, isNew, onBack, onRestart }) => {
         </div>
         <div className="px-6 pb-4 -mt-2 flex items-center gap-1.5 text-[11px] text-slate-400">
           <Sparkles className="h-3.5 w-3.5" /> Read-only view — a real deployment would open the Salesforce record page.
+        </div>
+      </div>
+
+      <div className="mt-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/70 shadow-sm overflow-hidden">
+        <div className="flex items-center gap-2 px-5 h-12 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60">
+          <Network className="h-4 w-4 text-[#0176D3]" />
+          <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">Enterprise hierarchy</span>
+          <span className="text-xs text-slate-400 ml-1">L1 → L2 → L3 → L4 roll-up</span>
+        </div>
+        <div className="p-5">
+          <HierarchyTree tree={tree} loading={treeLoading} />
+          {!treeLoading && tree && !tree.children?.length && tree.isFocus && (
+            <p className="text-xs text-slate-400 mt-2">No sub-records linked yet — as child relationships and entities are added, they will appear here.</p>
+          )}
         </div>
       </div>
 

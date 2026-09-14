@@ -1,4 +1,6 @@
 from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi.responses import Response
+from sf_scaffold import build_zip
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -131,6 +133,51 @@ async def get_account(account_id: str):
     return Account(**doc)
 
 
+def _parent_name(d: Dict[str, Any]) -> Optional[str]:
+    a = d.get("attributes", {}) or {}
+    return a.get("parentRelationship") or a.get("parentEntity")
+
+
+@api_router.get("/accounts/{account_id}/hierarchy")
+async def get_hierarchy(account_id: str):
+    docs = await db.accounts.find({}, {"_id": 0}).to_list(2000)
+    by_name = {d["name"]: d for d in docs}
+    focus = next((d for d in docs if d["id"] == account_id), None)
+    if not focus:
+        raise HTTPException(status_code=404, detail="Account not found")
+
+    # walk up to the ultimate parent (root)
+    root = focus
+    seen = set()
+    while True:
+        pn = _parent_name(root)
+        if pn and pn in by_name and by_name[pn]["id"] not in seen:
+            seen.add(root["id"])
+            root = by_name[pn]
+        else:
+            break
+
+    children_of: Dict[str, List[Dict[str, Any]]] = {}
+    for d in docs:
+        pn = _parent_name(d)
+        if pn:
+            children_of.setdefault(pn, []).append(d)
+
+    def build(node: Dict[str, Any], visited: Optional[set] = None) -> Dict[str, Any]:
+        visited = visited or set()
+        visited.add(node["id"])
+        kids = sorted(children_of.get(node["name"], []), key=lambda x: (x["level"], x["name"]))
+        return {
+            "id": node["id"], "level": node["level"], "name": node["name"],
+            "relationshipId": node["relationshipId"], "status": node["status"],
+            "country": node["country"], "industry": node["industry"],
+            "isFocus": node["id"] == account_id,
+            "children": [build(k, visited) for k in kids if k["id"] not in visited],
+        }
+
+    return {"focusId": account_id, "tree": build(root)}
+
+
 @api_router.post("/accounts", response_model=Account)
 async def create_account(payload: AccountCreate):
     if payload.level not in ("L1", "L2"):
@@ -138,6 +185,15 @@ async def create_account(payload: AccountCreate):
     account = Account(**payload.model_dump(), source="manual")
     await db.accounts.insert_one(account.model_dump())
     return account
+
+
+@api_router.get("/scaffold/download")
+async def scaffold_download():
+    return Response(
+        content=build_zip(),
+        media_type="application/zip",
+        headers={"Content-Disposition": "attachment; filename=meridianone-salesforce-package.zip"},
+    )
 
 
 # ---------------------------------------------------------------------------

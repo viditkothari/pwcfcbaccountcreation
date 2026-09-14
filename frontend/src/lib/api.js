@@ -9,4 +9,6 @@ export const api = {
   get: async (id) => (await axios.get(`${BASE}/accounts/${id}`)).data,
   create: async (payload) =>
     (await axios.post(`${BASE}/accounts`, payload)).data,
+  hierarchy: async (id) => (await axios.get(`${BASE}/accounts/${id}/hierarchy`)).data,
+  scaffoldUrl: () => `${BASE}/scaffold/download`,
 };
