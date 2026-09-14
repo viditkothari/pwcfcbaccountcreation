@@ -18,7 +18,7 @@ export const StepLevelSelect = ({ selected, onSelect, onNext }) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-        {levelOrder.map((code) => {
+        {levelOrder.filter((code) => LEVELS[code].creatable).map((code) => {
           const lvl = LEVELS[code];
           const isSel = selected === code;
           const disabled = !lvl.creatable;
