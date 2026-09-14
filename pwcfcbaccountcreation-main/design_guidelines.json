@@ -1,0 +1,98 @@
+{
+  "project_title": "Salesforce Commercial Banking - Account & Relationship Creation Flow (SLDS 2)",
+  "context_type": "saas_app",
+  "archetype": "SWISS & HIGH-CONTRAST / THE PERFORMANCE PRO (Salesforce SLDS 2 Commercial Banking)",
+  "theme_strategy": {
+    "default_mode": "light",
+    "mode_toggle": true,
+    "description": "Salesforce Lightning Design System (SLDS 2) precision aesthetic with slate blue accents, crisp borders, compact density, and high visual clarity for enterprise relationship managers."
+  },
+  "typography": {
+    "font_family_heading": "'Salesforce Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    "font_family_body": "'Salesforce Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    "font_family_mono": "'JetBrains Mono', 'Fira Code', monospace",
+    "heading_styles": {
+      "h1": "text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100",
+      "h2": "text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100",
+      "h3": "text-xl font-semibold text-slate-800 dark:text-slate-200",
+      "h4": "text-lg font-medium text-slate-800 dark:text-slate-200"
+    },
+    "body_styles": {
+      "base": "text-sm text-slate-700 dark:text-slate-300 leading-normal",
+      "small": "text-xs text-slate-500 dark:text-slate-400"
+    },
+    "labels_and_badges": "text-xs font-semibold uppercase tracking-wider text-slate-500"
+  },
+  "colors": {
+    "brand_primary": "#0176D3",
+    "brand_primary_hover": "#014486",
+    "brand_primary_light": "#EEF4FE",
+    "accent_gold": "#DD7A01",
+    "success_green": "#04844B",
+    "warning_amber": "#FE9339",
+    "danger_red": "#EA001E",
+    "neutral_bg_light": "#F3F5F9",
+    "neutral_surface": "#FFFFFF",
+    "neutral_border": "#D8DCE6",
+    "neutral_text_primary": "#181B25",
+    "neutral_text_secondary": "#514F4D",
+    "dark_bg": "#0B132B",
+    "dark_surface": "#1C2541",
+    "dark_border": "#3A506B",
+    "level_badges": {
+      "L1": "bg-blue-100 text-blue-800 border-blue-300 dark:bg-blue-900/50 dark:text-blue-200",
+      "L2": "bg-indigo-100 text-indigo-800 border-indigo-300 dark:bg-indigo-900/50 dark:text-indigo-200",
+      "L3": "bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-900/50 dark:text-amber-200",
+      "L4": "bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-900/50 dark:text-emerald-200"
+    }
+  },
+  "layout_and_spacing": {
+    "container_padding": "p-6 sm:p-8",
+    "card_padding": "p-5 sm:p-6",
+    "gap_scale": "gap-4 sm:gap-6",
+    "grid_structure": "grid-cols-1 md:grid-cols-12",
+    "table_density": "compact SLDS 2 datatable with sticky header, row hover effects, and crisp cell borders"
+  },
+  "visual_enhancers": {
+    "borders": "1px solid #D8DCE6 with subtle dark mode adjustments",
+    "shadows": "shadow-sm hover:shadow-md transition-shadow duration-200",
+    "glassmorphism": "backdrop-blur-md bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800",
+    "slds_path_component": "Multi-step Salesforce Progress Path header (1. Select Level -> 2. Search & Validate -> 3. Match Results -> 4. Account Action)"
+  },
+  "image_urls": {
+    "dashboard_preview": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "analytics_screen": "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "enterprise_summary": "https://images.unsplash.com/photo-1763718528755-4bca23f82ac3?crop=entropy&cs=srgb&fm=jpg&q=85"
+  },
+  "key_functionalities_and_ux_flow": {
+    "step_1_level_selection": "Card selection for L1 Primary Relationship (Holdings / Ultimate Parent) and L2 Intermediate Relationship (Sub-holding / Regional Operating Entity). Displays read-only descriptions for L3 Legal Entity & L4 Financial Account.",
+    "step_2_search_validation": "5 filter controls: Relationship/Account Name (text), Relationship ID (text), Country/Region (picklist), Industry (picklist), Status (picklist). Includes quick resets & mock data preset triggers.",
+    "step_3_results_datatable": "Client-side DataTables.net interactive table showing seeded rich commercial banking records. Dynamic columns adapted per level (e.g. Credit Rating, Ultimate Parent, Tax ID, Segment). Features in-browser filter/search, quick preview drawer icon, and launch CTA.",
+    "step_4a_launch_readonly": "Read-only detailed drawer / modal displaying hierarchy tree, credit limits, AML/KYC status, key contacts, and sub-entities.",
+    "step_4b_dynamic_create_form": "Full SLDS 2 validated creation form for L1 & L2 with sections for General Info, Financial/Regulatory Details, Address & Region, and Relationship Assignment. Form validation, error indicators, and instant mock submission to local state table."
+  },
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. In frontend design, this creates what users call the 'AI slop' aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition (e.g., transition: all). Always add transitions for specific interactive elements excluding transforms.",
+    "You MUST NOT center align the app container (.App { text-align: center; }).",
+    "Always use modern button styles (SLDS brand buttons, pill-shaped badges, sharp primary actions) with hover states.",
+    "NEVER use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 for icons. Use Lucide icons or SLDS svg icons.",
+    "Every interaction needs micro-animations - hover states, transitions, slide-over preview drawers.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "All interactive and key informational elements MUST include a data-testid attribute in kebab-case (e.g. data-testid='step-level-l1-card', data-testid='search-account-name-input', data-testid='submit-create-account-button').",
+    "DO NOT use complete transparent background in header, overlays, dropdowns, or drawer surfaces."
+  ],
+  "instructions_to_main_agent": [
+    "Build a rich, interactive, production-ready React web app in /app/frontend/src/App.js representing the Salesforce Commercial Banking CRM Screen Flow.",
+    "Implement SLDS 2 layout styling: Header with Salesforce Global Header bar, Navigation tabs, Salesforce Lightning Path component at top of flow.",
+    "Support all 4 levels in hierarchy: L1 (Primary Relationship), L2 (Intermediate Relationship), L3 (Legal Entity), L4 (Financial Account).",
+    "Integrate DataTables/shadcn table with client-side sorting, column filtering, row preview side-drawer, and launch action.",
+    "Implement rich seed data with 15+ realistic enterprise banking records (e.g., Apex Global Corp, Horizon Energy Holdings, Pacific Retail Logistics).",
+    "Provide a sleek Dark/Light theme toggle in top utility bar.",
+    "Ensure full client-side state preservation and reactivity so creating an L1/L2 account dynamically inserts it into the datatable."
+  ]
+}
